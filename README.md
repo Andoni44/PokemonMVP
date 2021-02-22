@@ -8,7 +8,7 @@ This app offers a main view based on a table view that displays a collection of 
 
 For **performance** reasons, this app ask to the server for **only 20 characters per request**. So, any time an user reachs the bottom list, a new request is performed with next offset.
 
-When a user taps any character cell, a detail view with picture, abilites and types is shown(this view offers **landscape support**).
+When an user taps any character cell, a detail view with picture, abilites and types is shown(this view offers **landscape support**).
 
 ## Ligth/dark mode
 
