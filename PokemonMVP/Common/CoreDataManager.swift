@@ -22,7 +22,7 @@ final class CoreDataManager: CoreDataManagerProtocol {
     
     var appDelegate = UIApplication.shared.delegate as? AppDelegate
     var manageObjectContext: NSManagedObjectContext? = nil
-    let entityName = "PokemonCoreDataList"
+    private let entityName = "PokemonCoreDataList"
     
     func saveData(results: Results) {
         resetEntity()

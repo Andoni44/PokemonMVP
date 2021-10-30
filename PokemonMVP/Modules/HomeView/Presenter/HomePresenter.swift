@@ -11,14 +11,22 @@ final class HomePresenter {
     
     ///Components
     weak var view: HomeViewProtocol?
-    var router: HomeRouterProtocol?
+    private var router: HomeRouterProtocol
     
-    ///Service layer
-    var session: URLSessionProtocol?
-    lazy var service: ApiFactoryProtocol = ApiFactory(session: self.session)
+    var remoteDataSource: ApiFactoryProtocol
     private var nextEndpoint: String?
-    private let defaults = UserDefaults.standard
-    private let coreDataManager: CoreDataManagerProtocol = CoreDataManager()
+    private let defaults: UserDefaults
+    private let localDataSource: CoreDataManagerProtocol
+
+    init(router: HomeRouterProtocol,
+         coreDataManager: CoreDataManagerProtocol = CoreDataManager(),
+         defaults: UserDefaults = UserDefaults.standard,
+         remoteDataSource: ApiFactoryProtocol = ApiFactory()) {
+        self.router = router
+        self.localDataSource = coreDataManager
+        self.defaults = defaults
+        self.remoteDataSource = remoteDataSource
+    }
 }
 
 // MARK: - Presenter
@@ -32,7 +40,7 @@ extension HomePresenter: HomePresenterProtocol {
             nextEndpoint = next
             getSavedDate()
         } else {
-            requestNewPokemons(fromEndpoint: service.endPoint)
+            requestNewPokemons(fromEndpoint: remoteDataSource.endPoint)
         }
     }
     
@@ -49,7 +57,7 @@ extension HomePresenter: HomePresenterProtocol {
      */
     func showPokemonDetail(fromUrl url: String, andUpdateList list: Results) {
         guard let view = view else { return }
-        service.getPokemonDetail(fromEndPoint: url) { result in
+        remoteDataSource.getData(fromEndPoint: url) { (result: Result<Pokemon, NetworkError>) in
             self.view?.stopAnimating()
             switch result {
             case .success(let pokemon):
@@ -57,16 +65,16 @@ extension HomePresenter: HomePresenterProtocol {
                     let newData = list.filter{ $0.name != pokemon.name }
                     view.updateList(replacingData: newData)
                 }
-                self.router?.pushDetailView(fromView: view, presentData: pokemon, deleteAction: action)
+                self.router.pushDetailView(fromView: view, presentData: pokemon, deleteAction: action)
             case .failure(let error):
-                self.router?.presentAlert(onView: view, withTitle: "Error", andMessage: error.localizedDescription)
+                self.router.presentAlert(onView: view, withTitle: "Error", andMessage: error.localizedDescription)
             }
         }
     }
     
     func saveList(_ list: Results) {
         DispatchQueue.main.async {
-            self.coreDataManager.saveData(results: list)
+            self.localDataSource.saveData(results: list)
         }
     }
 }
@@ -80,7 +88,7 @@ private extension HomePresenter {
     func requestNewPokemons(fromEndpoint endpoint: String) {
         guard let view = view else { return }
         view.startAnimating()
-        service.getPokemonList(fromEndPoint: endpoint) { result in
+        remoteDataSource.getData(fromEndPoint: endpoint) { (result: Result<PokemonList, NetworkError>) in
             view.stopAnimating()
             switch result {
             case .success(let list):
@@ -89,8 +97,7 @@ private extension HomePresenter {
                 view.updateList(withData: list.results)
             case .failure(let error):
                 view.stopAnimating()
-                print("ANDONI: ", error)
-                self.router?.presentAlert(onView: view, withTitle: "Error", andMessage: error.localizedDescription)
+                self.router.presentAlert(onView: view, withTitle: "Error", andMessage: error.localizedDescription)
             }
         }
     }
@@ -101,7 +108,7 @@ private extension HomePresenter {
     func getSavedDate() {
         self.view?.stopAnimating()
         DispatchQueue.main.async {
-            let results = self.coreDataManager.getRecentSearches()
+            let results = self.localDataSource.getRecentSearches()
             self.view?.updateList(replacingData: results)
         }
     }

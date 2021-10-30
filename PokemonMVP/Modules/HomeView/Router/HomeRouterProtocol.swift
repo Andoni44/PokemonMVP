@@ -9,5 +9,7 @@ import Foundation
 
 protocol HomeRouterProtocol: RouterProtocol {
     
-    func pushDetailView(fromView view: HomeViewProtocol, presentData data: Pokemon, deleteAction: @escaping () -> ())
+    func pushDetailView(fromView view: HomeViewProtocol,
+                        presentData data: Pokemon,
+                        deleteAction: @escaping () -> ())
 }

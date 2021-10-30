@@ -11,8 +11,14 @@ final class DetailPresenter {
     
     ///Components
     weak var view: DetailViewProtocol?
-    var router: DetailRouterProtocol?
-    var coreDatamanager: CoreDataManagerProtocol = CoreDataManager()
+    private var router: DetailRouterProtocol
+    private var coreDatamanager: CoreDataManagerProtocol
+
+    init(router: DetailRouterProtocol,
+         coreDataManager: CoreDataManagerProtocol = CoreDataManager()) {
+        self.router = router
+        self.coreDatamanager = coreDataManager
+    }
 }
 
 // MARK: - Presenter
@@ -39,9 +45,10 @@ extension DetailPresenter: DetailPresenterProtocol {
      * Remove Pokemon
      */
     func removePokemon(name: String) {
-        guard let view = view, let deleteAction = view.deleteAction else { return }
+        guard let view = view else { return }
+        guard let deleteAction = view.deleteAction else { return }
         coreDatamanager.removeData(byName: name)
         deleteAction()
-        router?.pop(fromView: view)
+        router.pop(fromView: view)
     }
 }

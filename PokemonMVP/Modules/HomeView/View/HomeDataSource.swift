@@ -37,7 +37,7 @@ extension HomeDataSource: HomeDataSourceProtocol {
     
 }
 
-protocol HomeDataSourceProtocol: class {
+protocol HomeDataSourceProtocol: AnyObject {
     
     var data: Results? { get set }
     var offset: Int { get set }

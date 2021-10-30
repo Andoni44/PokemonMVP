@@ -7,9 +7,8 @@
 
 import Foundation
 
-protocol DetailViewProtocol: class {
+protocol DetailViewProtocol: AnyObject {
     
     var deleteAction: (() -> ())? { get set }
-    var presenter: DetailPresenterProtocol? { get set }
     var pokemon: Pokemon? { get set }
 }

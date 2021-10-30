@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class DetailRouter {
+struct DetailRouter {
     
 }
 
@@ -15,11 +15,10 @@ final class DetailRouter {
 extension DetailRouter: DetailRouterProtocol {
     
     func createViewController() -> UIViewController {
-        let view: DetailViewProtocol = DetailView()
-        let presenter: DetailPresenterProtocol = DetailPresenter()
-        presenter.router = self
+
+        let presenter: DetailPresenterProtocol = DetailPresenter(router: self)
+        let view: DetailViewProtocol = DetailView(presenter: presenter)
         presenter.view = view
-        view.presenter = presenter
         
         if let view = view as? UIViewController {
             return view

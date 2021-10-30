@@ -7,16 +7,13 @@
 
 import Foundation
 
-final class ApiFactory: ApiFactoryProtocol {
+struct ApiFactory: ApiFactoryProtocol {
     
     let endPoint = "https://pokeapi.co/api/v2/pokemon"
-    let session: URLSessionProtocol
+    var session: URLSessionProtocol
     var dataTask: URLSessionDataTask?
-    init(session: URLSessionProtocol?) {
-        guard let session = session else {
-            self.session = URLSession.shared
-            return
-        }
+    
+    init(session: URLSessionProtocol = URLSession.shared) {
         self.session = session
     }
 }
