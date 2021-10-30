@@ -7,10 +7,11 @@
 
 import Foundation
 
-protocol DetailPresenterProtocol: class {
+
+// sourcery
+protocol DetailPresenterProtocol: AnyObject {
     
     var view: DetailViewProtocol? { get set }
-    var router: DetailRouterProtocol? { get set }
     
     func didLoad()
     func returnTypes(pokemon: Pokemon) -> [TypeName]

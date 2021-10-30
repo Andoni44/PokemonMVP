@@ -7,7 +7,7 @@
 
 import Foundation
 
-final class App {
+struct App {
     
     enum Colors: String {
         case main = "Main"

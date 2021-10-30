@@ -9,24 +9,37 @@ import XCTest
 
 class HomePresenterServiceTests: XCTestCase {
 
-    let mockURLSession = MockURLSession()
-    let sut = HomePresenter()
+    var mockURLSession: MockURLSession!
+    var sut: HomePresenterProtocol!
+
+    override func setUp() {
+        super.setUp()
+        mockURLSession = MockURLSession()
+        let remoteDataSource = ApiFactory(session: mockURLSession)
+        let router: HomeRouterTestDouble = HomeRouterTestDouble()
+        sut = HomePresenter(router: router, remoteDataSource: remoteDataSource)
+    }
+
+    override func tearDown() {
+        super.tearDown()
+        sut = nil
+        mockURLSession = nil
+    }
     
     func test_dataTask_execute() {
-        sut.session = mockURLSession
-        sut.session?.dataTask(with: URLRequest(url: URL(string: "https://pokeapi.co/api/v2/pokemon")!), completionHandler: { (data, response, error) in
+        sut.remoteDataSource.session.dataTask(with: URLRequest(url: URL(string: "https://pokeapi.co/api/v2/pokemon")!), completionHandler: { (data, response, error) in
             
         }).resume()
-        if let sess = sut.session as? MockURLSession {
+        if let sess = sut.remoteDataSource.session as? MockURLSession {
             XCTAssertEqual(sess.dataTaskCallCount, 1, "call count")
         }
     }
     
     func test_fetch_results() {
-        sut.session = URLSession.shared
+        sut.remoteDataSource.session = URLSession.shared
         var listCount = 0
         let expectation = self.expectation(description: "Expecting 20 pokemons")
-        sut.service.getPokemonList(fromEndPoint: "https://pokeapi.co/api/v2/pokemon") { result in
+        sut.remoteDataSource.getData(fromEndPoint: "https://pokeapi.co/api/v2/pokemon") { (result: Result<PokemonList, NetworkError>) in
             switch result {
             case .success(let list):
                 listCount = list.results.count
@@ -40,10 +53,10 @@ class HomePresenterServiceTests: XCTestCase {
     }
     
     func test_fetch_pokemon_details() {
-        sut.session = URLSession.shared
+        sut.remoteDataSource.session = URLSession.shared
         var name = ""
         let expectation = self.expectation(description: "Expecting Bulbasaur")
-        sut.service.getPokemonDetail(fromEndPoint: "https://pokeapi.co/api/v2/pokemon/1/") { result in
+        sut.remoteDataSource.getData(fromEndPoint: "https://pokeapi.co/api/v2/pokemon/1/") { (result: Result<Pokemon, NetworkError>) in
             switch result {
             case .success(let pokemon):
                 name = pokemon.name

@@ -10,7 +10,7 @@ import UIKit
 final class HomeView: UIViewController {
     
     ///Components
-    var presenter: HomePresenterProtocol?
+    private var presenter: HomePresenterProtocol
     var dataSource: HomeDataSourceProtocol?
     ///UI elements
     private let searchController = UISearchController(searchResultsController: nil)
@@ -60,17 +60,26 @@ final class HomeView: UIViewController {
             }
         }
     }
+
+    init(presenter: HomePresenterProtocol) {
+        self.presenter = presenter
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func viewDidLoad() {
         setupFront()
         dataSource?.offsetControl = { [unowned self] bottomReached in
             DispatchQueue.main.async {
                 if bottomReached && !isFiltering {
-                    self.presenter?.next()
+                    self.presenter.next()
                 }
             }
         }
-        presenter?.didLoad()
+        presenter.didLoad()
     }
     
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
@@ -167,7 +176,7 @@ extension HomeView: UITableViewDelegate {
         guard let pokemonList = pokemonList, let pokemonListFiltered = pokemonListFiltered else { return }
         DispatchQueue.main.async {
             let url = self.isFiltering ? pokemonListFiltered[indexPath.item].url : pokemonList[indexPath.item].url
-            self.presenter?.showPokemonDetail(fromUrl: url, andUpdateList: pokemonList)
+            self.presenter.showPokemonDetail(fromUrl: url, andUpdateList: pokemonList)
         }
     }
     
@@ -185,7 +194,7 @@ extension HomeView: HomeViewProtocol {
         let list = pokemonList ?? []
         let newList = list + data
         self.pokemonList = newList
-        presenter?.saveList(newList)
+        presenter.saveList(newList)
         allowNewRequest = true
     }
     

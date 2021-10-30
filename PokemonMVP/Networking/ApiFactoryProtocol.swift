@@ -10,7 +10,7 @@ import Foundation
 protocol ApiFactoryProtocol {
     
     var endPoint: String { get }
-    
-    func getPokemonList(fromEndPoint endPoint: String, completion: @escaping ((Result<PokemonList, NetworkError>) -> Void))
-    func getPokemonDetail(fromEndPoint endPoint: String, completion: @escaping ((Result<Pokemon, NetworkError>) -> Void))
+    var session: URLSessionProtocol { get set }
+
+    func getData<T: Decodable>(fromEndPoint endPoint: String, completion: @escaping ((Result<T, NetworkError>) -> Void))
 }

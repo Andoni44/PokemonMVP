@@ -7,9 +7,7 @@
 
 import Foundation
 
-protocol HomeViewProtocol: class {
-    
-    var presenter: HomePresenterProtocol? { get set }
+protocol HomeViewProtocol: AnyObject {
     var dataSource: HomeDataSourceProtocol? { get set }
     
     func updateList(withData data: Results)

@@ -7,10 +7,10 @@
 
 import Foundation
 
-protocol HomePresenterProtocol: class {
+protocol HomePresenterProtocol: AnyObject {
     
     var view: HomeViewProtocol? { get set }
-    var router: HomeRouterProtocol? { get set }
+    var remoteDataSource: ApiFactoryProtocol { get set }
     
     func didLoad()
     func next()

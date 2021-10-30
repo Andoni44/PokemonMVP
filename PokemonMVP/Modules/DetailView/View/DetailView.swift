@@ -154,8 +154,17 @@ final class DetailView: UIViewController {
     var pokemon: Pokemon?
     
     ///Components
-    var presenter: DetailPresenterProtocol?
-    
+    private var presenter: DetailPresenterProtocol
+
+    init(presenter: DetailPresenterProtocol) {
+        self.presenter = presenter
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
         populateFront()
@@ -264,12 +273,12 @@ private extension DetailView {
     
     func setTypesSegment() {
         guard let pokemon = pokemon else { return }
-        let types = presenter?.returnTypes(pokemon: pokemon)
-        if let mainType = types?.first {
+        let types = presenter.returnTypes(pokemon: pokemon)
+        if let mainType = types.first {
             typeOneLabel.text = mainType.rawValue
             typeOneLabel.backgroundColor = UIColor(named: mainType.returnTypeColor().rawValue)
         }
-        if let secondType = types?.last, (types?.count ?? 1) == 2 {
+        if let secondType = types.last, (types.count) == 2 {
             typeStack.addArrangedSubview(typeTwoLabel)
             typeTwoLabel.text = secondType.rawValue
             typeTwoLabel.backgroundColor = UIColor(named: secondType.returnTypeColor().rawValue)
@@ -278,8 +287,8 @@ private extension DetailView {
     
     func setAbilitiesSegment() {
         guard let pokemon = pokemon else { return }
-        let abilities = presenter?.returnAbilitiesNames(pokemon: pokemon)
-        abilities?.forEach {
+        let abilities = presenter.returnAbilitiesNames(pokemon: pokemon)
+        abilities.forEach {
             let label = UILabel()
             label.font = UIFont.systemFont(ofSize: 18)
             label.textColor = .white
@@ -295,7 +304,7 @@ private extension DetailView {
     
     @objc func onDeletePokemon(_ sender: Any) {
         guard let pokemon = pokemon else { return }
-        presenter?.removePokemon(name: pokemon.name)
+        presenter.removePokemon(name: pokemon.name)
     }
 }
 
@@ -311,7 +320,8 @@ import SwiftUI
 struct Preview: PreviewProvider {
     
     static var previews: some View {
-        let vc = DetailView()
+        let router = DetailRouter()
+        let vc = DetailView(presenter: DetailPresenter(router: router))
         return Group {
             vc.view.instaView.edgesIgnoringSafeArea(.all)
             vc.view.instaView.edgesIgnoringSafeArea(.all)

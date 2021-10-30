@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class HomeRouter {
+struct HomeRouter {
     
 }
 
@@ -18,10 +18,8 @@ extension HomeRouter: HomeRouterProtocol {
      * Dependency injection when a module is created
      */
     func createViewController() -> UIViewController {
-        let homeView: HomeViewProtocol = HomeView()
-        let presenter: HomePresenterProtocol = HomePresenter()
-        presenter.router = self
-        homeView.presenter = presenter
+        let presenter: HomePresenterProtocol = HomePresenter(router: self)
+        let homeView: HomeViewProtocol = HomeView(presenter: presenter)
         presenter.view = homeView
         let homeDataSource: HomeDataSourceProtocol = HomeDataSource()
         homeView.dataSource = homeDataSource
@@ -35,7 +33,9 @@ extension HomeRouter: HomeRouterProtocol {
     /*
      * Present detail View
      */
-    func pushDetailView(fromView view: HomeViewProtocol, presentData data: Pokemon, deleteAction: @escaping () -> ()) {
+    func pushDetailView(fromView view: HomeViewProtocol,
+                        presentData data: Pokemon,
+                        deleteAction: @escaping () -> ()) {
         DispatchQueue.main.async {
             let detailView = DetailRouter().viewController
             if let dV = detailView as? DetailViewProtocol {

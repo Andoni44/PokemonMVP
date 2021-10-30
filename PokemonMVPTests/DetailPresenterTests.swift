@@ -9,8 +9,18 @@ import XCTest
 
 class DetailPresenterTests: XCTestCase {
 
-    let sut = DetailPresenter()
+    var sut: DetailPresenter!
     let pokemon = Pokemon(id: 2, name: "ivysaur", baseExperience: 142, height: 10, isDefault: true, order: 2, abilities: [Ability(isHidden: false, slot: 1, ability: AbilityData(name: "overgrow", url: "https://pokeapi.co/api/v2/ability/65/")), Ability(isHidden: true, slot: 3, ability: AbilityData(name: "chlorophyll", url: "https://pokeapi.co/api/v2/ability/34/"))], species: AbilityData(name: "ivysaur", url: "https://pokeapi.co/api/v2/pokemon-species/2/"), types: [TypeElement(slot: 1, type: Type(url: "https://pokeapi.co/api/v2/type/12/", name: TypeName.grass)), TypeElement(slot: 2, type: Type(url: "https://pokeapi.co/api/v2/type/4/", name: TypeName.poison))], sprites: nil)
+
+    override func setUp() {
+        super.setUp()
+        let router: DetailRouterTestDouble = DetailRouterTestDouble()
+        sut = DetailPresenter(router: router)
+    }
+
+    override func tearDown() {
+        super.tearDown()
+    }
     
     func test_return_types() {
         let types = sut.returnTypes(pokemon: pokemon)
@@ -27,9 +37,8 @@ class DetailPresenterTests: XCTestCase {
     }
     
     func test_pokemon_removal() {
-        let view: DetailViewProtocol = DetailView()
+        let view: DetailViewProtocol = DetailView(presenter: sut)
         sut.view = view
-        view.presenter = sut
         let results: Results = [PokemonResultElement(name: "ivysaur", url: "https://pokeapi.co/api/v2/pokemon/2/")]
         var dataTotal = 12
         let action = {
