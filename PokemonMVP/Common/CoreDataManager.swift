@@ -29,18 +29,21 @@ final class CoreDataManager: CoreDataManagerProtocol {
         loadContext()
         guard let context = manageObjectContext else { return }
         results.forEach {
-            let newEntry = NSEntityDescription.insertNewObject(forEntityName: entityName, into: context)
+            let newEntry = NSEntityDescription.insertNewObject(forEntityName: entityName,
+                                                               into: context)
             newEntry.setValue($0.name, forKey: "name")
             newEntry.setValue($0.url, forKey: "url")
             newEntry.setValue(Date(), forKey: "date")
         }
         do {
             try context.save()
+            pokemonMVPLog("Pokemon list saved 💾", level: .debug, tag: .coreData)
         } catch {
-            debugPrint("Error saving context: \(error)")
+            context.rollback()
+            pokemonMVPLog(error, message: "Error saving context and rolling back 🚨", tag: .coreData)
         }
     }
-    
+
     func removeData(byName name: String) {
         loadContext()
         guard let context = manageObjectContext else { return }
@@ -51,7 +54,8 @@ final class CoreDataManager: CoreDataManagerProtocol {
             try context.delete(context.fetch(fetchRequest)[0])
             try context.save()
         } catch {
-            debugPrint("Error saving context: \(error)")
+            context.rollback()
+            pokemonMVPLog(error, message: "Error saving context and rolling back 🚨", tag: .coreData)
         }
     }
     
@@ -66,12 +70,14 @@ final class CoreDataManager: CoreDataManagerProtocol {
             let pokemonResult = try context.fetch(request)
             for item in pokemonResult {
                 if let pokmeonCoreDataListItem = item as? PokemonCoreDataList {
-                    let pokemon = PokemonResultElement(name: pokmeonCoreDataListItem.name ?? "", url: pokmeonCoreDataListItem.url ?? "")
+                    let pokemon = PokemonResultElement(name: pokmeonCoreDataListItem.name ?? "",
+                                                       url: pokmeonCoreDataListItem.url ?? "")
                     toRet.append(pokemon)
                 }
             }
+            pokemonMVPLog("Saved pokemons revovered 💾", level: .debug, tag: .coreData)
         } catch let nserror as NSError{
-            print("ERROR: Coredata error \(nserror)")
+            pokemonMVPLog(nserror, message: "Coredata error 🚨", tag: .coreData)
         }
         return toRet
     }
@@ -88,7 +94,7 @@ fileprivate extension CoreDataManager {
             do {
                 try manageObjectContext.execute(request)
             } catch let nserror as NSError{
-                print("ERROR: Coredata deleting batch error \(nserror)")
+                pokemonMVPLog(nserror, message: "ERROR: Coredata deleting batch error 🚨", tag: .coreData)
             }
         }
     }

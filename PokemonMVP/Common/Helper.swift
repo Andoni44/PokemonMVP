@@ -16,18 +16,25 @@ struct Helper {
             let model = try decoder.decode(T.self, from: data)
             completion(model)
             } catch let DecodingError.dataCorrupted(context) {
-                print(context)
+                pokemonMVPLog(DecodingError.dataCorrupted(context),
+                              message: context.debugDescription,
+                              tag: .decoding)
             } catch let DecodingError.keyNotFound(key, context) {
-                print("Key '\(key)' not found:", context.debugDescription)
-                print("codingPath:", context.codingPath)
+                pokemonMVPLog(DecodingError.keyNotFound(key, context),
+                              message: "Key '\(key)' not found:, \(context.debugDescription). codingPath: \(context.codingPath) 🚨",
+                              tag: .decoding)
             } catch let DecodingError.valueNotFound(value, context) {
-                print("Value '\(value)' not found:", context.debugDescription)
-                print("codingPath:", context.codingPath)
+                pokemonMVPLog(DecodingError.valueNotFound(value, context),
+                              message: "Value '\(value)' not found:, \(context.debugDescription). codingPath: \(context.codingPath) 🚨",
+                              tag: .decoding)
             } catch let DecodingError.typeMismatch(type, context)  {
-                print("Type '\(type)' mismatch:", context.debugDescription)
-                print("codingPath:", context.codingPath)
-            } catch {
-                print("Error decoding data")
+                pokemonMVPLog(DecodingError.typeMismatch(type, context),
+                              message: "Type '\(type)' mismatch:, \(context.debugDescription). codingPath: \(context.codingPath) 🚨",
+                              tag: .decoding)
+            } catch let error {
+                pokemonMVPLog(error,
+                              message: "Error decoding json 🚨",
+                              tag: .decoding)
             }
     }
 }

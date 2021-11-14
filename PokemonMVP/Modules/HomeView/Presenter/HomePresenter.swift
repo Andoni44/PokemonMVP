@@ -56,25 +56,28 @@ extension HomePresenter: HomePresenterProtocol {
      * Pokemon detail
      */
     func showPokemonDetail(fromUrl url: String, andUpdateList list: Results) {
-        guard let view = view else { return }
-        remoteDataSource.getData(fromEndPoint: url) { (result: Result<Pokemon, NetworkError>) in
-            self.view?.stopAnimating()
+
+        remoteDataSource.getData(fromEndPoint: url) { [weak self] (result: Result<Pokemon, NetworkError>) in
+            guard let view = self?.view, let self = self else { return }
+            view.stopAnimating()
             switch result {
             case .success(let pokemon):
+                    pokemonMVPLog("Pokemon detail loaded successfully 📡", level: .debug, tag: .networking)
                 let action = {
                     let newData = list.filter{ $0.name != pokemon.name }
                     view.updateList(replacingData: newData)
                 }
                 self.router.pushDetailView(fromView: view, presentData: pokemon, deleteAction: action)
             case .failure(let error):
+                pokemonMVPLog(error, message: "Pokemon detail failed 🚨", tag: .networking)
                 self.router.presentAlert(onView: view, withTitle: "Error", andMessage: error.localizedDescription)
             }
         }
     }
     
     func saveList(_ list: Results) {
-        DispatchQueue.main.async {
-            self.localDataSource.saveData(results: list)
+        DispatchQueue.main.async { [weak self] in
+            self?.localDataSource.saveData(results: list)
         }
     }
 }
@@ -92,6 +95,7 @@ private extension HomePresenter {
             view.stopAnimating()
             switch result {
             case .success(let list):
+                pokemonMVPLog("New pokemons loaded successfully 📡", level: .debug, tag: .networking)
                 self.nextEndpoint = list.next
                 self.defaults.set(list.next, forKey: App.DefaultKeys.next.rawValue)
                 view.updateList(withData: list.results)
@@ -107,9 +111,9 @@ private extension HomePresenter {
      */
     func getSavedDate() {
         self.view?.stopAnimating()
-        DispatchQueue.main.async {
-            let results = self.localDataSource.getRecentSearches()
-            self.view?.updateList(replacingData: results)
+        DispatchQueue.main.async { [weak self] in
+            guard let results = self?.localDataSource.getRecentSearches() else { return }
+            self?.view?.updateList(replacingData: results)
         }
     }
 }
