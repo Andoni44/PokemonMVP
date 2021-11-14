@@ -15,7 +15,10 @@ extension ApiFactory {
         request.httpMethod = "GET"
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
         session.dataTask(with: request) { (data, response, error) in
-            guard let data = data, error == nil, let response = response as? HTTPURLResponse else {
+            guard let data = data,
+                    error == nil,
+                    let response = response as? HTTPURLResponse
+            else {
                 guard let error = error as NSError? else { return }
                 if error.domain == NSURLErrorDomain && error.code == NSURLErrorNotConnectedToInternet {
                     completion(.failure(.noNetwork))

@@ -20,8 +20,12 @@ extension HomeDataSource: UITableViewDataSource {
         return data?.count ?? 0
     }
     
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "cell") as? PokemonTableViewCell, let data = data else { return UITableViewCell() }
+    func tableView(_ tableView: UITableView,
+                   cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard
+            let cell = tableView.dequeueReusableCell(withIdentifier: "cell") as? PokemonTableViewCell,
+                let data = data
+        else { return UITableViewCell() }
         cell.pokemonName = data[indexPath.item].name
         if indexPath.item == data.count - 1{
             if let getMoreItems = offsetControl {

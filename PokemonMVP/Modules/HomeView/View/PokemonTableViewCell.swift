@@ -71,7 +71,21 @@ private extension PokemonTableViewCell {
         containerView.addSubview(titleLabel)
         backgroundColor = UIColor(named: App.Colors.main.rawValue)
         containerView.backgroundColor = UIColor(named: App.Colors.cell.rawValue)
-        titleLabel.anchor(topAnchor: containerView.topAnchor, trailingAnchor: nil, bottomAnchor: containerView.bottomAnchor, leadingAnchor: containerView.leadingAnchor, padding: .init(top: 16, left: 16, bottom: 16, right: .zero))
-        containerView.anchor(topAnchor: topAnchor, trailingAnchor: trailingAnchor, bottomAnchor: bottomAnchor, leadingAnchor: leadingAnchor, padding: .init(top: 8, left: 16, bottom: 8, right: 16))
+        titleLabel.anchor(topAnchor: containerView.topAnchor,
+                          trailingAnchor: nil,
+                          bottomAnchor: containerView.bottomAnchor,
+                          leadingAnchor: containerView.leadingAnchor,
+                          padding: .init(top: 16,
+                                         left: 16,
+                                         bottom: 16,
+                                         right: .zero))
+        containerView.anchor(topAnchor: topAnchor,
+                             trailingAnchor: trailingAnchor,
+                             bottomAnchor: bottomAnchor,
+                             leadingAnchor: leadingAnchor,
+                             padding: .init(top: 8,
+                                            left: 16,
+                                            bottom: 8,
+                                            right: 16))
     }
 }

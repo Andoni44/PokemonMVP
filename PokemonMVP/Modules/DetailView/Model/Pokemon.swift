@@ -77,12 +77,16 @@ enum TypeName: String, Codable {
         return TypeColor(rawValue: self.rawValue) ?? .normal
     }
     
-    case fire, water, normal, grass, flying, fighting, poison, electric, ground, rock, psychic, ice, bug, ghost, steel, dragon, dark, fairy
+    case fire, water, normal, grass, flying, fighting, poison,
+         electric, ground, rock, psychic, ice, bug, ghost,
+         steel, dragon, dark, fairy
 }
 
 enum TypeColor: String{
     
-    case fire, water, normal, grass, flying, fighting, poison, electric, ground, rock, psychic, ice, bug, ghost, steel, dragon, dark, fairy
+    case fire, water, normal, grass, flying, fighting, poison,
+         electric, ground, rock, psychic, ice, bug, ghost,
+         steel, dragon, dark, fairy
 }
 
 typealias PokemonResults = [Pokemon]

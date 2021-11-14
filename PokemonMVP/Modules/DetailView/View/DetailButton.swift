@@ -17,7 +17,9 @@ final class DetailButton: UIButton {
         fatalError("init(coder:) has not been implemented")
     }
     
-    convenience init(text: String, color: UIColor, insets: UIEdgeInsets) {
+    convenience init(text: String,
+                     color: UIColor,
+                     insets: UIEdgeInsets) {
         self.init(frame: .zero)
         setTitle(text, for: .normal)
         backgroundColor = color
@@ -25,7 +27,11 @@ final class DetailButton: UIButton {
         configure()
     }
     
-    convenience init(text: String, color: UIColor, insets: UIEdgeInsets, font: UIFont, corner: CGFloat) {
+    convenience init(text: String,
+                     color: UIColor,
+                     insets: UIEdgeInsets,
+                     font: UIFont,
+                     corner: CGFloat) {
         self.init(frame: .zero)
         setTitle(text, for: .normal)
         backgroundColor = color
@@ -38,7 +44,8 @@ final class DetailButton: UIButton {
         configure(font: font, corner: corner)
     }
     
-    private func configure(font: UIFont = UIFont.systemFont(ofSize: 20, weight: .medium), corner: CGFloat = 5) {
+    private func configure(font: UIFont = UIFont.systemFont(ofSize: 20, weight: .medium),
+                           corner: CGFloat = 5) {
         layer.cornerRadius = corner
         titleLabel?.font =  font
         setTitleColor(.white, for: .normal)
@@ -46,7 +53,9 @@ final class DetailButton: UIButton {
         titleLabel?.textAlignment = .center
     }
     
-    private func configure(image: UIImage, corner: CGFloat, color: UIColor) {
+    private func configure(image: UIImage,
+                           corner: CGFloat,
+                           color: UIColor) {
         layer.cornerRadius = corner
         imageView?.contentMode = .scaleAspectFit
         imageView?.tintColor = #colorLiteral(red: 0.3387862979, green: 0.5772582401, blue: 0.5119804772, alpha: 1)
@@ -60,7 +69,11 @@ final class DetailButton: UIButton {
         self.transform = CGAffineTransform(scaleX: 1.2, y: 1.2)
         self.alpha = 0.5
         
-        UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0.5, options: [], animations: {
+        UIView.animate(withDuration: 0.5,
+                       delay: 0,
+                       usingSpringWithDamping: 0.8,
+                       initialSpringVelocity: 0.5,
+                       options: [], animations: {
             
             self.center.y += 20
             self.transform = CGAffineTransform.identity

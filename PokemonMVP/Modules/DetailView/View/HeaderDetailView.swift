@@ -58,9 +58,24 @@ private extension HeaderDetailView {
         header.addSubview(imageView)
         header.addSubview(nameBackground)
         nameBackground.addSubview(nameLabel)
-        header.anchor(topAnchor: topAnchor, trailingAnchor: trailingAnchor, bottomAnchor: bottomAnchor, leadingAnchor: leadingAnchor, padding: .init(top: .zero, left: 10, bottom: .zero, right: 10))
-        imageView.anchor(topAnchor: header.topAnchor, trailingAnchor: header.trailingAnchor, bottomAnchor: header.bottomAnchor, leadingAnchor: header.leadingAnchor)
-        nameLabel.anchor(topAnchor: nameBackground.topAnchor, trailingAnchor: nameBackground.trailingAnchor, bottomAnchor: nameBackground.bottomAnchor, leadingAnchor: nameBackground.leadingAnchor, padding: .init(top: 2, left: 5, bottom: 3, right: 5))
-        nameBackground.anchor(topAnchor: nil, trailingAnchor: header.trailingAnchor, bottomAnchor: header.bottomAnchor, leadingAnchor: nil, padding: .init(top: .zero, left: .zero, bottom: 10, right: 10))
+        header.anchor(topAnchor: topAnchor,
+                      trailingAnchor: trailingAnchor,
+                      bottomAnchor: bottomAnchor,
+                      leadingAnchor: leadingAnchor,
+                      padding: .init(top: .zero, left: 10, bottom: .zero, right: 10))
+        imageView.anchor(topAnchor: header.topAnchor,
+                         trailingAnchor: header.trailingAnchor,
+                         bottomAnchor: header.bottomAnchor,
+                         leadingAnchor: header.leadingAnchor)
+        nameLabel.anchor(topAnchor: nameBackground.topAnchor,
+                         trailingAnchor: nameBackground.trailingAnchor,
+                         bottomAnchor: nameBackground.bottomAnchor,
+                         leadingAnchor: nameBackground.leadingAnchor,
+                         padding: .init(top: 2, left: 5, bottom: 3, right: 5))
+        nameBackground.anchor(topAnchor: nil,
+                              trailingAnchor: header.trailingAnchor,
+                              bottomAnchor: header.bottomAnchor,
+                              leadingAnchor: nil,
+                              padding: .init(top: .zero, left: .zero, bottom: 10, right: 10))
     }
 }
