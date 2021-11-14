@@ -41,12 +41,10 @@ final class HomeView: UIViewController {
     ///data
     private var pokemonList: Results? {
         didSet {
-            pokemonList?.forEach {
-                print($0.url, $0.name)
-            }
             dataSource?.data = pokemonList
             pokemonListFiltered = pokemonList
             reloadData()
+            pokemonMVPLog("Pokemon list presented 👁", level: .debug, tag: .presentation)
         }
     }
     private var pokemonListFiltered: Results? {

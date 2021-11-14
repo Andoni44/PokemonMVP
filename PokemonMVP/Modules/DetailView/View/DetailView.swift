@@ -238,14 +238,29 @@ private extension DetailView {
         }
         typeStack.addArrangedSubview(typeOneLabel)
         setInitAxis()
-        header.anchor(topAnchor: headerStack.topAnchor, trailingAnchor: headerStack.trailingAnchor, bottomAnchor: nil, leadingAnchor: headerStack.leadingAnchor)
-        scrollView.anchor(topAnchor: view.safeAreaLayoutGuide.topAnchor, trailingAnchor: view.safeAreaLayoutGuide.trailingAnchor, bottomAnchor: view.safeAreaLayoutGuide.bottomAnchor, leadingAnchor: view.safeAreaLayoutGuide.leadingAnchor)
-        containerView.anchor(topAnchor: scrollView.topAnchor, trailingAnchor: scrollView.trailingAnchor, bottomAnchor: scrollView.bottomAnchor, leadingAnchor: scrollView.leadingAnchor)
-        fullBodyStack.anchor(topAnchor: containerView.topAnchor, trailingAnchor: containerView.trailingAnchor, bottomAnchor: containerView.bottomAnchor, leadingAnchor: containerView.leadingAnchor, padding: .init(top: topPadding, left: lateralPadding, bottom: topPadding, right: lateralPadding))
+        header.anchor(topAnchor: headerStack.topAnchor,
+                      trailingAnchor: headerStack.trailingAnchor,
+                      bottomAnchor: nil,
+                      leadingAnchor: headerStack.leadingAnchor)
+        scrollView.anchor(topAnchor: view.safeAreaLayoutGuide.topAnchor,
+                          trailingAnchor: view.safeAreaLayoutGuide.trailingAnchor,
+                          bottomAnchor: view.safeAreaLayoutGuide.bottomAnchor,
+                          leadingAnchor: view.safeAreaLayoutGuide.leadingAnchor)
+        containerView.anchor(topAnchor: scrollView.topAnchor,
+                             trailingAnchor: scrollView.trailingAnchor,
+                             bottomAnchor: scrollView.bottomAnchor,
+                             leadingAnchor: scrollView.leadingAnchor)
+        fullBodyStack.anchor(topAnchor: containerView.topAnchor,
+                             trailingAnchor: containerView.trailingAnchor,
+                             bottomAnchor: containerView.bottomAnchor,
+                             leadingAnchor: containerView.leadingAnchor,
+                             padding: .init(top: topPadding,
+                                            left: lateralPadding,
+                                            bottom: topPadding,
+                                            right: lateralPadding))
         scrollWidth.priority = .defaultLow
         scrollHeight.priority = .defaultLow
         NSLayoutConstraint.activate([
-            //button.centerXAnchor.constraint(equalTo: containerView.centerXAnchor),
             button.widthAnchor.constraint(equalToConstant: 200),
             button.heightAnchor.constraint(equalToConstant: 50),
             button.heightAnchor.constraint(equalToConstant: 50),
@@ -266,7 +281,8 @@ private extension DetailView {
         title = name
         header.nameLabel.text = number + " " + name
         button.setTitle("Remove " + name, for: .normal)
-        header.imageView.sd_setImage(with: URL(string: pokemon.sprites?.frontDefault ?? ""), placeholderImage: UIImage(named: "placeholder.png"))
+        header.imageView.sd_setImage(with: URL(string: pokemon.sprites?.frontDefault ?? ""),
+                                     placeholderImage: UIImage(named: "placeholder.png"))
         setTypesSegment()
         setAbilitiesSegment()
     }

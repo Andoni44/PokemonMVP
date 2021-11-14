@@ -12,6 +12,10 @@
 		1F0396F425E27D9700F4C784 /* TestingUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F0396F325E27D9700F4C784 /* TestingUtils.swift */; };
 		1F0396F525E27D9700F4C784 /* TestingUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F0396F325E27D9700F4C784 /* TestingUtils.swift */; };
 		1F34137A272D7DB100256468 /* TestDoubles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F341378272D7D8800256468 /* TestDoubles.swift */; };
+		1F34137D272D871800256468 /* CocoaLumberjack in Frameworks */ = {isa = PBXBuildFile; productRef = 1F34137C272D871800256468 /* CocoaLumberjack */; };
+		1F34137F272D871800256468 /* CocoaLumberjackSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 1F34137E272D871800256468 /* CocoaLumberjackSwift */; };
+		1F341382272D877D00256468 /* Log.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F341381272D877D00256468 /* Log.swift */; };
+		1F3413842730018A00256468 /* UIApplication+AppVersion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F3413832730018A00256468 /* UIApplication+AppVersion.swift */; };
 		1F486F6225E29E730088F3DF /* HomePresenterServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F486F6125E29E730088F3DF /* HomePresenterServiceTests.swift */; };
 		1F486F8225E2AA020088F3DF /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FA7BD7825DFD43B00725352 /* HomeView.swift */; };
 		1F486F9525E2AA820088F3DF /* HomeRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FA7BD5D25DFD23400725352 /* HomeRouter.swift */; };
@@ -114,6 +118,8 @@
 		1F0396E625E268F400F4C784 /* AppConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppConfiguration.swift; sourceTree = "<group>"; };
 		1F0396F325E27D9700F4C784 /* TestingUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestingUtils.swift; sourceTree = "<group>"; };
 		1F341378272D7D8800256468 /* TestDoubles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestDoubles.swift; sourceTree = "<group>"; };
+		1F341381272D877D00256468 /* Log.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Log.swift; sourceTree = "<group>"; };
+		1F3413832730018A00256468 /* UIApplication+AppVersion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIApplication+AppVersion.swift"; sourceTree = "<group>"; };
 		1F486F6125E29E730088F3DF /* HomePresenterServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePresenterServiceTests.swift; sourceTree = "<group>"; };
 		1F486FA625E2B3910088F3DF /* DetailPresenterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailPresenterTests.swift; sourceTree = "<group>"; };
 		1F486FBA25E2C35B0088F3DF /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
@@ -170,7 +176,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1F34137D272D871800256468 /* CocoaLumberjack in Frameworks */,
 				1FA7BDF825E1075D00725352 /* SDWebImageMapKit in Frameworks */,
+				1F34137F272D871800256468 /* CocoaLumberjackSwift in Frameworks */,
 				1FA7BDF625E1075D00725352 /* SDWebImage in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -391,6 +399,7 @@
 				1F486FBA25E2C35B0088F3DF /* CoreDataManager.swift */,
 				1FA8172825E4391A004F762B /* NetworkErrors.swift */,
 				1F341378272D7D8800256468 /* TestDoubles.swift */,
+				1F341381272D877D00256468 /* Log.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -401,6 +410,7 @@
 				1FA7BDB525E0137300725352 /* UIView+Anchor.swift */,
 				1FA7BDBF25E01BB200725352 /* UIview+ShadowView.swift */,
 				1FC897C425E141DF001E0DE8 /* UIView+Preview.swift */,
+				1F3413832730018A00256468 /* UIApplication+AppVersion.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -454,6 +464,8 @@
 			packageProductDependencies = (
 				1FA7BDF525E1075D00725352 /* SDWebImage */,
 				1FA7BDF725E1075D00725352 /* SDWebImageMapKit */,
+				1F34137C272D871800256468 /* CocoaLumberjack */,
+				1F34137E272D871800256468 /* CocoaLumberjackSwift */,
 			);
 			productName = PokemonMVP;
 			productReference = 1FA7BCDA25DFCA8A00725352 /* PokemonMVP.app */;
@@ -506,6 +518,7 @@
 			mainGroup = 1FA7BCD125DFCA8A00725352;
 			packageReferences = (
 				1FA7BDF425E1075D00725352 /* XCRemoteSwiftPackageReference "SDWebImage" */,
+				1F34137B272D871800256468 /* XCRemoteSwiftPackageReference "CocoaLumberjack" */,
 			);
 			productRefGroup = 1FA7BCDB25DFCA8A00725352 /* Products */;
 			projectDirPath = "";
@@ -557,6 +570,7 @@
 			files = (
 				1FA7BD5325DFD1C600725352 /* RouterProtocol.swift in Sources */,
 				1FC897B725E13C32001E0DE8 /* DetailView.swift in Sources */,
+				1F341382272D877D00256468 /* Log.swift in Sources */,
 				1FA7BDC025E01BB200725352 /* UIview+ShadowView.swift in Sources */,
 				1FA7BD8025E00BFE00725352 /* PokemonTableViewCell.swift in Sources */,
 				1FA7BDD925E05B5600725352 /* ApiFactoryProtocol.swift in Sources */,
@@ -590,6 +604,7 @@
 				1FC8981B25E1791C001E0DE8 /* DetailButton.swift in Sources */,
 				1FA7BD5E25DFD23400725352 /* HomeRouter.swift in Sources */,
 				1FA7BD6825DFD39B00725352 /* HomePresenterProtocol.swift in Sources */,
+				1F3413842730018A00256468 /* UIApplication+AppVersion.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -893,6 +908,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		1F34137B272D871800256468 /* XCRemoteSwiftPackageReference "CocoaLumberjack" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/CocoaLumberjack/CocoaLumberjack";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 3.0.0;
+			};
+		};
 		1FA7BDF425E1075D00725352 /* XCRemoteSwiftPackageReference "SDWebImage" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SDWebImage/SDWebImage";
@@ -904,6 +927,16 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		1F34137C272D871800256468 /* CocoaLumberjack */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 1F34137B272D871800256468 /* XCRemoteSwiftPackageReference "CocoaLumberjack" */;
+			productName = CocoaLumberjack;
+		};
+		1F34137E272D871800256468 /* CocoaLumberjackSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 1F34137B272D871800256468 /* XCRemoteSwiftPackageReference "CocoaLumberjack" */;
+			productName = CocoaLumberjackSwift;
+		};
 		1FA7BDF525E1075D00725352 /* SDWebImage */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 1FA7BDF425E1075D00725352 /* XCRemoteSwiftPackageReference "SDWebImage" */;

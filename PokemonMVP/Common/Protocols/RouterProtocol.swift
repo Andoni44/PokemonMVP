@@ -9,13 +9,19 @@ import UIKit
 
 protocol RouterProtocol {
     
-    func presentAlert(onView view: Any, withTitle title: String, andMessage message: String, actions: [UIAlertAction])
+    func presentAlert(onView view: Any,
+                      withTitle title: String,
+                      andMessage message: String,
+                      actions: [UIAlertAction])
     func createViewController() -> UIViewController
 }
 
 extension RouterProtocol {
     
-    func presentAlert(onView view: Any, withTitle title: String, andMessage message: String, actions: [UIAlertAction] = []) {
+    func presentAlert(onView view: Any,
+                      withTitle title: String,
+                      andMessage message: String,
+                      actions: [UIAlertAction] = []) {
         guard let view = view as? UIViewController else { return }
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         if actions.isEmpty {
@@ -26,6 +32,7 @@ extension RouterProtocol {
             }
         }
         DispatchQueue.main.async {
+            pokemonMVPLog("Alert presented", level: .debug, tag: .navigation)
             view.present(alert, animated: true)
         }
     }
