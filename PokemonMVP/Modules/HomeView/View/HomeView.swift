@@ -94,8 +94,8 @@ final class HomeView: UIViewController {
 private extension HomeView {
     
     func reloadData() {
-        DispatchQueue.main.async {
-            self.tableView.reloadData()
+        DispatchQueue.main.async { [weak self] in
+            self?.tableView.reloadData()
         }
     }
 }
