@@ -91,7 +91,8 @@ private extension HomePresenter {
     func requestNewPokemons(fromEndpoint endpoint: String) {
         guard let view = view else { return }
         view.startAnimating()
-        remoteDataSource.getData(fromEndPoint: endpoint) { (result: Result<PokemonList, NetworkError>) in
+        remoteDataSource.getData(fromEndPoint: endpoint) { [weak self] (result: Result<PokemonList, NetworkError>) in
+            guard let self = self else { return }
             view.stopAnimating()
             switch result {
             case .success(let list):

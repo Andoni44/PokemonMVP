@@ -14,6 +14,7 @@ protocol HomePresenterProtocol: AnyObject {
     
     func didLoad()
     func next()
-    func showPokemonDetail(fromUrl url: String, andUpdateList list: Results)
+    func showPokemonDetail(fromUrl url: String,
+                           andUpdateList list: Results)
     func saveList(_ list: Results)
 }

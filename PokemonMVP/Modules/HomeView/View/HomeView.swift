@@ -80,7 +80,8 @@ final class HomeView: UIViewController {
         presenter.didLoad()
     }
     
-    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+    override func viewWillTransition(to size: CGSize,
+                                     with coordinator: UIViewControllerTransitionCoordinator) {
         navigationItem.largeTitleDisplayMode = .always
         coordinator.animate(alongsideTransition: { (_) in
             self.navigationController?.navigationBar.sizeToFit()
@@ -126,7 +127,8 @@ private extension HomeView {
         searchController.searchBar.delegate = self
         definesPresentationContext = true
         if let textfield = searchController.searchBar.value(forKey: "searchField") as? UITextField {
-            textfield.attributedPlaceholder = NSAttributedString(string: textfield.placeholder ?? "", attributes: [NSAttributedString.Key.foregroundColor : UIColor.white])
+            textfield.attributedPlaceholder = NSAttributedString(string: textfield.placeholder ?? "",
+                                                                 attributes: [NSAttributedString.Key.foregroundColor : UIColor.white])
         }
         /// TextField Color Customization
         if let textfield = searchController.searchBar.value(forKey: "searchField") as? UITextField {
@@ -134,19 +136,38 @@ private extension HomeView {
             textfield.textColor = .white
         }
 
-        searchController.searchBar.searchTextField.attributedPlaceholder = NSAttributedString(string: NSLocalizedString("Search any pokemon", comment: ""), attributes: [NSAttributedString.Key.foregroundColor: UIColor.white])
-        searchController.searchBar.searchTextField.textColor = .white
+        searchController
+            .searchBar
+            .searchTextField
+            .attributedPlaceholder = NSAttributedString(string: NSLocalizedString("Search any pokemon", comment: ""),
+                                                                                              attributes: [NSAttributedString.Key.foregroundColor: UIColor.white])
+        searchController
+            .searchBar
+            .searchTextField
+            .textColor = .white
     }
     
     // Navigation setup
     func navigationSetup() {
         title = "All Pokemon!"
-        navigationController?.navigationBar.barTintColor = UIColor(named: App.Colors.main.rawValue)
-        navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.init(named: App.Colors.cell.rawValue) ?? UIColor.white, NSAttributedString.Key.font: UIFont(name: App.Fonts.antonRegular.rawValue, size: UIDevice.current.userInterfaceIdiom == .pad ? 23 : 20)!]
-        navigationController?.navigationBar.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white, NSAttributedString.Key.font: UIFont(name: App.Fonts.antonRegular.rawValue, size: UIDevice.current.userInterfaceIdiom == .pad ? 50 : 30)!]
+        navigationController?
+            .navigationBar
+            .barTintColor = UIColor(named: App.Colors.main.rawValue)
+        navigationController?
+            .navigationBar
+            .titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.init(named: App.Colors.cell.rawValue) ?? UIColor.white,
+                                    NSAttributedString.Key.font: UIFont(name: App.Fonts.antonRegular.rawValue,
+                                                                        size: UIDevice.current.userInterfaceIdiom == .pad ? 23 : 20)!]
+        navigationController?
+            .navigationBar
+            .largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white,
+                                         NSAttributedString.Key.font: UIFont(name: App.Fonts.antonRegular.rawValue,
+                                                                             size: UIDevice.current.userInterfaceIdiom == .pad ? 50 : 30)!]
         navigationItem.searchController = searchController
         navigationController?.navigationBar.prefersLargeTitles = true
-        let barBackItem = UIBarButtonItem(title: NSLocalizedString("All Pokemons", comment: ""), style: .plain, target: nil, action: nil)
+        let barBackItem = UIBarButtonItem(title: NSLocalizedString("All Pokemons", comment: ""), style: .plain,
+                                          target: nil,
+                                          action: nil)
         navigationItem.backBarButtonItem = barBackItem
     }
     
@@ -155,7 +176,11 @@ private extension HomeView {
         [tableView, refresher].forEach {
             view.addSubview($0)
         }
-        tableView.anchor(topAnchor: view.safeAreaLayoutGuide.topAnchor, trailingAnchor: view.safeAreaLayoutGuide.trailingAnchor, bottomAnchor: view.bottomAnchor, leadingAnchor: view.safeAreaLayoutGuide.leadingAnchor)
+        tableView
+            .anchor(topAnchor: view.safeAreaLayoutGuide.topAnchor,
+                    trailingAnchor: view.safeAreaLayoutGuide.trailingAnchor,
+                    bottomAnchor: view.bottomAnchor,
+                    leadingAnchor: view.safeAreaLayoutGuide.leadingAnchor)
         refresher.translatesAutoresizingMaskIntoConstraints = false
         refresher.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
         refresher.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
@@ -171,8 +196,12 @@ private extension HomeView {
 extension HomeView: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard let pokemonList = pokemonList, let pokemonListFiltered = pokemonListFiltered else { return }
-        DispatchQueue.main.async {
+        guard
+            let pokemonList = pokemonList,
+            let pokemonListFiltered = pokemonListFiltered
+        else { return }
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else { return }
             let url = self.isFiltering ? pokemonListFiltered[indexPath.item].url : pokemonList[indexPath.item].url
             self.presenter.showPokemonDetail(fromUrl: url, andUpdateList: pokemonList)
         }
@@ -224,8 +253,12 @@ extension HomeView: UISearchResultsUpdating, UISearchBarDelegate {
     
     func updateSearchResults(for searchController: UISearchController) {
         guard let pokemonList = pokemonList else { return }
-        self.pokemonListFiltered = pokemonList.filter { (character: PokemonResultElement) -> Bool in
-            if character.name.lowercased().contains(self.searchController.searchBar.text!.lowercased()) {
+        self.pokemonListFiltered = pokemonList.filter { [weak self] (character: PokemonResultElement) -> Bool in
+            guard let self = self else { return false }
+            if character
+                .name
+                .lowercased()
+                .contains(self.searchController.searchBar.text!.lowercased()) {
                 return true
             } else{
                 return false

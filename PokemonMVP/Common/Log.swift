@@ -165,7 +165,8 @@ private func prettyErrorMessage(error: Error, message: String? = nil, tag: LogTa
                          withTag: tag)
 }
 
-private func prettyMessage(message: @autoclosure () -> CustomStringConvertible, withTag tag: LogTag) -> String {
+private func prettyMessage(message: @autoclosure () -> CustomStringConvertible,
+                           withTag tag: LogTag) -> String {
     return "\(tag.description): \(message().description)"
 }
 

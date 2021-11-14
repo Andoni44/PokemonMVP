@@ -12,5 +12,6 @@ protocol ApiFactoryProtocol {
     var endPoint: String { get }
     var session: URLSessionProtocol { get set }
 
-    func getData<T: Decodable>(fromEndPoint endPoint: String, completion: @escaping ((Result<T, NetworkError>) -> Void))
+    func getData<T: Decodable>(fromEndPoint endPoint: String,
+                               completion: @escaping ((Result<T, NetworkError>) -> Void))
 }

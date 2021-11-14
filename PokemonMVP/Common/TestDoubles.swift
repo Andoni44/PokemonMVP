@@ -8,7 +8,10 @@
 import UIKit
 
 struct HomeRouterTestDouble: HomeRouterProtocol {
-    func pushDetailView(fromView view: HomeViewProtocol, presentData data: Pokemon, deleteAction: @escaping () -> ()) {}
+    func pushDetailView(fromView view: HomeViewProtocol,
+                        presentData data: Pokemon,
+                        deleteAction: @escaping () -> ()) {}
+    
     func createViewController() -> UIViewController {
         UIViewController()
     }

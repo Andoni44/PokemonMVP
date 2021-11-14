@@ -63,7 +63,15 @@ final class DetailView: UIViewController {
     }()
     
     private let button: DetailButton = {
-        let button = DetailButton(text: "Remove", color: #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1), insets: UIEdgeInsets(top: 5, left: 5, bottom: 3, right: 5), font: UIFont.systemFont(ofSize: 19, weight: .medium), corner: 5)
+        let button = DetailButton(text: "Remove",
+                                  color: #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1),
+                                  insets: UIEdgeInsets(top: 5,
+                                                       left: 5,
+                                                       bottom: 3,
+                                                       right: 5),
+                                  font: UIFont.systemFont(ofSize: 19,
+                                                          weight: .medium),
+                                  corner: 5)
         return button
     }()
     
@@ -134,14 +142,26 @@ final class DetailView: UIViewController {
     private let typeSpacer = UIView()
     
     ///Header constraints
-    lazy var portraitHeight = header.heightAnchor.constraint(equalToConstant: view.frame.width - 32 - 200)
-    lazy var portraitwidth = header.widthAnchor.constraint(equalToConstant: view.frame.width - 32)
-    lazy var landscapeHeight = header.heightAnchor.constraint(equalToConstant: view.frame.height - 32 - 200)
-    lazy var landscapewidth = header.widthAnchor.constraint(equalToConstant: view.frame.height - 32)
+    lazy var portraitHeight = header
+        .heightAnchor
+        .constraint(equalToConstant: view.frame.width - 32 - 200)
+    lazy var portraitwidth = header
+        .widthAnchor
+        .constraint(equalToConstant: view.frame.width - 32)
+    lazy var landscapeHeight = header
+        .heightAnchor
+        .constraint(equalToConstant: view.frame.height - 32 - 200)
+    lazy var landscapewidth = header
+        .widthAnchor
+        .constraint(equalToConstant: view.frame.height - 32)
     
     ///scroll constraints
-    lazy var scrollHeight = containerView.heightAnchor.constraint(equalTo: scrollView.heightAnchor)
-    lazy var scrollWidth = containerView.widthAnchor.constraint(equalTo: scrollView.widthAnchor)
+    lazy var scrollHeight = containerView
+        .heightAnchor
+        .constraint(equalTo: scrollView.heightAnchor)
+    lazy var scrollWidth = containerView
+        .widthAnchor
+        .constraint(equalTo: scrollView.widthAnchor)
     
     private var windowInterfaceOrientation: UIInterfaceOrientation? {
         return UIApplication.shared.windows.first?.windowScene?.interfaceOrientation
@@ -171,13 +191,17 @@ final class DetailView: UIViewController {
         setupFront()
     }
     
-    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
-        setAxis()
-        navigationItem.largeTitleDisplayMode = .always
-        coordinator.animate(alongsideTransition: { (_) in
-            self.navigationController?.navigationBar.sizeToFit()
-        }, completion: nil)
-        view.layoutIfNeeded()
+    override func viewWillTransition(to size: CGSize,
+                                     with coordinator: UIViewControllerTransitionCoordinator) {
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else { return }
+            self.setAxis()
+            self.navigationItem.largeTitleDisplayMode = .always
+            coordinator.animate(alongsideTransition: { (_) in
+                self.navigationController?.navigationBar.sizeToFit()
+            }, completion: nil)
+            self.view.layoutIfNeeded()
+        }
     }
 }
 

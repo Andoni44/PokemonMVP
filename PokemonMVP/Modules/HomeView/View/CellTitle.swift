@@ -50,8 +50,18 @@ private extension CellTitle {
    func setupViews() {
         addSubview(background)
         background.addSubview(titleLabel)
-        background.anchor(topAnchor: topAnchor, trailingAnchor: trailingAnchor, bottomAnchor: bottomAnchor, leadingAnchor: leadingAnchor)
-        titleLabel.anchor(topAnchor: background.topAnchor, trailingAnchor: nil, bottomAnchor: background.bottomAnchor, leadingAnchor: background.leadingAnchor, padding: .init(top: 2, left: 10, bottom: 3, right: .zero))
+        background.anchor(topAnchor: topAnchor,
+                          trailingAnchor: trailingAnchor,
+                          bottomAnchor: bottomAnchor,
+                          leadingAnchor: leadingAnchor)
+        titleLabel.anchor(topAnchor: background.topAnchor,
+                          trailingAnchor: nil,
+                          bottomAnchor: background.bottomAnchor,
+                          leadingAnchor: background.leadingAnchor,
+                          padding: .init(top: 2,
+                                         left: 10,
+                                         bottom: 3,
+                                         right: .zero))
     }
 }
 
