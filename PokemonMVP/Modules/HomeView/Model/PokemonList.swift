@@ -8,6 +8,7 @@
 import Foundation
 
 // MARK: - PokemonList
+
 struct PokemonList: Codable {
     let count: Int
     let next, previous: String?
@@ -15,6 +16,7 @@ struct PokemonList: Codable {
 }
 
 // MARK: - Result
+
 struct PokemonResultElement: Codable {
     let name: String
     let url: String

@@ -84,6 +84,7 @@ final class CoreDataManager: CoreDataManagerProtocol {
 }
 
 // MARK: - Private local
+
 fileprivate extension CoreDataManager {
     
     func resetEntity() {

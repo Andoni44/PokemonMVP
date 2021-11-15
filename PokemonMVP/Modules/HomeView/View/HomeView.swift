@@ -8,11 +8,14 @@
 import UIKit
 
 final class HomeView: UIViewController {
-    
-    ///Components
+
+    // MARK: Module components
+
     private var presenter: HomePresenterProtocol
     var dataSource: HomeDataSourceProtocol?
-    ///UI elements
+
+    // MARK: UI Outlets
+
     private let searchController = UISearchController(searchResultsController: nil)
     private let refresher: UIActivityIndicatorView = {
         let refresher = UIActivityIndicatorView()
@@ -30,7 +33,9 @@ final class HomeView: UIViewController {
         table.rowHeight = UITableView.automaticDimension
         return table
     }()
-    ///Control data
+
+    // MARK: Core data
+
     private var allowNewRequest = true
     var isFiltering: Bool {
         return searchController.isActive && !isSearchBarEmpty
@@ -38,7 +43,8 @@ final class HomeView: UIViewController {
     private var isSearchBarEmpty: Bool {
         return searchController.searchBar.text?.isEmpty ?? true
     }
-    ///data
+
+    // MARK: Data
     private var pokemonList: Results? {
         didSet {
             dataSource?.data = pokemonList
@@ -58,6 +64,8 @@ final class HomeView: UIViewController {
             }
         }
     }
+
+    // MARK: Life cycle
 
     init(presenter: HomePresenterProtocol) {
         self.presenter = presenter
@@ -91,6 +99,7 @@ final class HomeView: UIViewController {
 }
 
 // MARK: - Inner
+
 private extension HomeView {
     
     func reloadData() {
@@ -101,6 +110,7 @@ private extension HomeView {
 }
 
 // MARK: - Front
+
 private extension HomeView {
     
     func setupFront() {
@@ -109,8 +119,7 @@ private extension HomeView {
         setupTable()
         setupLayout()
     }
-    
-    // Table setup
+
     func setupTable() {
         tableView.delegate = self
         tableView.keyboardDismissMode = .onDrag
@@ -118,8 +127,7 @@ private extension HomeView {
             tableView.dataSource = dataSource
         }
     }
-    
-    // Search setup
+
     func searchSetup() {
         searchController.searchResultsUpdater = self
         searchController.obscuresBackgroundDuringPresentation = false
@@ -146,8 +154,7 @@ private extension HomeView {
             .searchTextField
             .textColor = .white
     }
-    
-    // Navigation setup
+
     func navigationSetup() {
         title = "All Pokemon!"
         navigationController?
@@ -170,8 +177,7 @@ private extension HomeView {
                                           action: nil)
         navigationItem.backBarButtonItem = barBackItem
     }
-    
-    // Layout
+
     func setupLayout() {
         [tableView, refresher].forEach {
             view.addSubview($0)
@@ -187,12 +193,8 @@ private extension HomeView {
     }
 }
 
-// MARK: - Actions
-private extension HomeView {
-    
-}
-
 // MARK: - TableViewDelegate
+
 extension HomeView: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -215,6 +217,7 @@ extension HomeView: UITableViewDelegate {
 }
 
 // MARK: - View output implementation
+
 extension HomeView: HomeViewProtocol {
 
     func updateList(withData data: Results) {
@@ -249,6 +252,7 @@ extension HomeView: HomeViewProtocol {
 }
 
 //MARK: - HomeView Search bar extension
+
 extension HomeView: UISearchResultsUpdating, UISearchBarDelegate {
     
     func updateSearchResults(for searchController: UISearchController) {

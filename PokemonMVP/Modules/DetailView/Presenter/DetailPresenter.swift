@@ -33,13 +33,8 @@ extension DetailPresenter: DetailPresenterProtocol {
         let abilities: [String]  = pokemon.abilities.map { $0.ability.name }
         return abilities
     }
-    
-    /*
-     * Update view
-     */
-    func didLoad() {
-        
-    }
+
+    func didLoad() {}
     
     /*
      * Remove Pokemon
