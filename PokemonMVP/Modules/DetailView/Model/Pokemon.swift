@@ -8,6 +8,7 @@
 import Foundation
 
 // MARK: - Pokemon
+
 struct Pokemon: Codable {
     let id: Int
     let name: String
@@ -30,6 +31,7 @@ struct Pokemon: Codable {
 }
 
 // MARK: - Sprites
+
 class Sprites: Codable {
     let frontDefault: String
     let animated: Sprites?
@@ -41,6 +43,7 @@ class Sprites: Codable {
 }
 
 // MARK: - Ability
+
 struct Ability: Codable {
     let isHidden: Bool
     let slot: Int
@@ -53,24 +56,28 @@ struct Ability: Codable {
 }
 
 // MARK: - Species
+
 struct AbilityData: Codable {
     let name: String
     let url: String
 }
 
 // MARK: - TypeElement
+
 struct TypeElement: Codable {
     let slot: Int
     let type: Type
 }
 
 // MARK: - Type
+
 struct Type: Codable {
     let url: String
     let name: TypeName
 }
 
 // MARK: - TypeName
+
 enum TypeName: String, Codable {
     
     func returnTypeColor() -> TypeColor {

@@ -8,8 +8,7 @@
 import Foundation
 
 final class HomePresenter {
-    
-    ///Components
+
     weak var view: HomeViewProtocol?
     private var router: HomeRouterProtocol
     
@@ -30,11 +29,9 @@ final class HomePresenter {
 }
 
 // MARK: - Presenter
+
 extension HomePresenter: HomePresenterProtocol {
-    
-    /*
-     * Upload the view
-     */
+
     func didLoad() {
         if let next = defaults.string(forKey: App.DefaultKeys.next.rawValue) {
             nextEndpoint = next
@@ -43,18 +40,13 @@ extension HomePresenter: HomePresenterProtocol {
             requestNewPokemons(fromEndpoint: remoteDataSource.endPoint)
         }
     }
-    
-    /*
-     * Next pokemons
-     */
+
     func next() {
         guard let next = nextEndpoint else { return }
         requestNewPokemons(fromEndpoint: next)
     }
     
-    /*
-     * Pokemon detail
-     */
+
     func showPokemonDetail(fromUrl url: String, andUpdateList list: Results) {
 
         remoteDataSource.getData(fromEndPoint: url) { [weak self] (result: Result<Pokemon, NetworkError>) in
@@ -83,6 +75,7 @@ extension HomePresenter: HomePresenterProtocol {
 }
 
 // MARK: - Inner
+
 private extension HomePresenter {
     
     /*
@@ -107,9 +100,6 @@ private extension HomePresenter {
         }
     }
     
-    /*
-     * Recovery saved list
-     */
     func getSavedDate() {
         self.view?.stopAnimating()
         DispatchQueue.main.async { [weak self] in

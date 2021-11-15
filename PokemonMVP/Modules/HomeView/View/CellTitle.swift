@@ -45,6 +45,7 @@ final class CellTitle: UIView {
 }
 
 //MARK: - View setup
+
 private extension CellTitle {
     
    func setupViews() {

@@ -10,7 +10,8 @@ import SDWebImage
 
 final class DetailView: UIViewController {
     
-    ///UI elements
+    // MARK: - UI Outlets
+
     private let scrollView: UIScrollView = {
         let view = UIScrollView()
         view.showsVerticalScrollIndicator = false
@@ -141,7 +142,8 @@ final class DetailView: UIViewController {
     
     private let typeSpacer = UIView()
     
-    ///Header constraints
+    // MARK: Header constraints
+
     lazy var portraitHeight = header
         .heightAnchor
         .constraint(equalToConstant: view.frame.width - 32 - 200)
@@ -167,14 +169,15 @@ final class DetailView: UIViewController {
         return UIApplication.shared.windows.first?.windowScene?.interfaceOrientation
     }
     
-    ///Delete pokemon reference code
+    // MARK: Data
+
     var deleteAction: (() -> ())?
-    
-    ///Data
     var pokemon: Pokemon?
     
-    ///Components
+    // MARK:  Module components
     private var presenter: DetailPresenterProtocol
+
+    // MARK: Life cycle
 
     init(presenter: DetailPresenterProtocol) {
         self.presenter = presenter
@@ -206,6 +209,7 @@ final class DetailView: UIViewController {
 }
 
 // MARK: - Front
+
 private extension DetailView {
     
     func setInitAxis() {
@@ -296,6 +300,7 @@ private extension DetailView {
 }
 
 // MARK: - Inner
+
 private extension DetailView {
     
     func populateFront() {
@@ -340,6 +345,7 @@ private extension DetailView {
 }
 
 // MARK: - Actions
+
 private extension DetailView {
     
     @objc func onDeletePokemon(_ sender: Any) {
@@ -349,6 +355,7 @@ private extension DetailView {
 }
 
 // MARK: - View
+
 extension DetailView: DetailViewProtocol {
     
 }

@@ -12,11 +12,9 @@ struct HomeRouter {
 }
 
 // MARK: - HomeRouter implementation
+
 extension HomeRouter: HomeRouterProtocol {
-    
-    /**
-     * Dependency injection when a module is created
-     */
+
     func createViewController() -> UIViewController {
         let presenter: HomePresenterProtocol = HomePresenter(router: self)
         let homeView: HomeViewProtocol = HomeView(presenter: presenter)
@@ -30,9 +28,6 @@ extension HomeRouter: HomeRouterProtocol {
         }
     }
     
-    /*
-     * Present detail View
-     */
     func pushDetailView(fromView view: HomeViewProtocol,
                         presentData data: Pokemon,
                         deleteAction: @escaping () -> ()) {

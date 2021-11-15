@@ -50,15 +50,16 @@ final class PokemonTableViewCell: UITableViewCell {
 }
 
 //MARK: - Inner
+
 private extension PokemonTableViewCell {
-    
-    // Fill the view
+
     func populateFront() {
         titleLabel.text = pokemonName
     }
 }
 
 //MARK: - View setup
+
 private extension PokemonTableViewCell {
     
     func setupFront() {
